@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html land="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Etch-a-Sketch</title>
+    <link rel="styleSheet" href="styles.css"></link>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bungee+Tint&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+    </style>
+</head>
+<body>
+
+    <div id="hero">
+    <h1>Etch-a-Sketch</h1>
+    <h2>Make your own sketch on your desired grid!</h2>
+    <button id="scroll-btn">Begin my sketch</button>
+    </div>
+
+    <div id="container"></div>
+</body>
+<script>
+    const scrolling = document.querySelector("#scroll-btn")
+    scrolling.addEventListener("click", function() {
+        document.querySelector("#container").scrollIntoView({behavior: "smooth"});
+    })
+</script>
+</html>
