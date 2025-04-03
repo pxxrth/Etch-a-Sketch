@@ -1,27 +1,65 @@
 <!DOCTYPE html>
-<html land="en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Etch-a-Sketch</title>
-    <link rel="styleSheet" href="styles.css"></link>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bungee+Tint&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
     <div id="hero">
-    <h1>Etch-a-Sketch</h1>
-    <h2>Make your own sketch on your desired grid!</h2>
-    <button id="scroll-btn">Begin my sketch</button>
+        <h1>Etch-a-Sketch</h1>
+        <h2>Make your own sketch on your desired grid!</h2>
+        <button id="scroll-btn">Begin my sketch</button>
     </div>
 
-    <div id="container"></div>
+    <div class="main-content">
+        <div id="dimension">
+            <h3>Dimension Control</h3>
+            <input type="range" id="grid-slider" min="1" max="100" value="16">
+            <span id="slider-value">16x16</span>
+        </div>
+
+        <div id="container"></div>
+    </div>
+
+    <script>
+        const scrolling = document.querySelector("#scroll-btn");
+        scrolling.addEventListener("click", function() {
+            document.querySelector("#container").scrollIntoView({behavior: "smooth"});
+        });
+
+        window.history.scrollRestoration = "manual";
+        window.onbeforeload = function() {
+            window.scrollTo(0, 0);
+        };
+
+        const slider = document.querySelector("#grid-slider");
+        const sliderValue = document.querySelector("#slider-value");
+
+        slider.addEventListener("input", function() {
+            sliderValue.textContent = slider.value + "x" + slider.value;
+            populateBoard(slider.value);  
+        });
+
+        function populateBoard(size) {
+            let grid = document.querySelector('#container');
+            grid.innerHTML = "";
+            
+            grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+            grid.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+
+            let amount = size * size;
+            for(let i = 0; i < amount; i++) {
+                let square = document.createElement("div");
+                square.classList.add("square");
+                square.addEventListener("mouseover", () => {
+                    square.style.backgroundColor = "black";
+                });
+                grid.appendChild(square);
+            }
+        }
+        populateBoard(16);
+    </script>
 </body>
-<script>
-    const scrolling = document.querySelector("#scroll-btn")
-    scrolling.addEventListener("click", function() {
-        document.querySelector("#container").scrollIntoView({behavior: "smooth"});
-    })
-</script>
 </html>
